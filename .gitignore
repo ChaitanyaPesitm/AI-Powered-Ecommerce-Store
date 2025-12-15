@@ -1,0 +1,15 @@
+# Config files with secrets
+config/db.php
+config/razorpay_config.php
+
+# IDE files
+.idea/
+.vscode/
+
+# Dependencies
+vendor/
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

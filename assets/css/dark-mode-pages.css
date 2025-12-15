@@ -1,0 +1,342 @@
+/* ============================================
+   DARK MODE SUPPORT FOR ALL PAGES
+   ============================================ */
+
+/* Global Page Styles */
+body {
+  background: var(--theme-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Page Headers */
+.page-header {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  transition: background 0.3s ease;
+}
+
+/* Cards and Containers */
+.cart-items-container,
+.order-summary-card,
+.wishlist-card,
+.empty-cart-state,
+.empty-wishlist-state,
+.card,
+.modal-content {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+/* Cart Item Cards */
+.cart-item-card {
+  background: var(--theme-bg-tertiary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Quantity Controls */
+.quantity-control {
+  background: var(--theme-bg-card) !important;
+}
+
+.qty-btn {
+  background: var(--theme-bg-tertiary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.qty-input {
+  background: transparent !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Remove Buttons */
+.remove-btn {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+[data-theme="dark"] .remove-btn:hover {
+  background: var(--danger) !important;
+  color: white !important;
+}
+
+/* Wishlist Image Background */
+.wishlist-image {
+  background: var(--theme-bg-tertiary) !important;
+}
+
+/* Bulk Actions */
+.bulk-actions {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Promo Code Section */
+.promo-code-section {
+  background: var(--theme-bg-tertiary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Support Page - Chat Container */
+.chat-container,
+.chat-messages,
+.chat-input-container {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+.chat-message {
+  background: var(--theme-bg-tertiary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.chat-message.user {
+  background: #667eea !important;
+  color: white !important;
+}
+
+/* Quick Links */
+.quick-links-card {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.quick-link-item {
+  background: var(--theme-bg-tertiary) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+.quick-link-item:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+}
+
+/* AI Assistant Page */
+.ai-assistant-container {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.suggestion-card {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+/* Text Colors */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--theme-text-primary) !important;
+}
+
+p {
+  color: var(--theme-text-primary) !important;
+}
+
+.text-muted {
+  color: var(--theme-text-secondary) !important;
+}
+
+/* Ensure text is visible in light backgrounds within dark mode */
+[data-theme="dark"] .card p,
+[data-theme="dark"] .card span,
+[data-theme="dark"] .card div,
+[data-theme="dark"] .modal-body p,
+[data-theme="dark"] .modal-body span,
+[data-theme="dark"] .modal-body div {
+  color: var(--theme-text-primary) !important;
+}
+
+/* Light mode - ensure dark text on white backgrounds */
+[data-theme="light"] .card,
+[data-theme="light"] .modal-content,
+[data-theme="light"] .form-control {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .card p,
+[data-theme="light"] .card span:not(.badge),
+[data-theme="light"] .card div:not(.badge),
+[data-theme="light"] .card h1,
+[data-theme="light"] .card h2,
+[data-theme="light"] .card h3,
+[data-theme="light"] .card h4,
+[data-theme="light"] .card h5,
+[data-theme="light"] .card h6,
+[data-theme="light"] .card li,
+[data-theme="light"] .card label {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .text-muted {
+  color: #6b7280 !important;
+}
+
+/* Force visible text in light mode for common elements */
+body:not([data-theme="dark"]) p,
+body:not([data-theme="dark"]) span:not(.badge),
+body:not([data-theme="dark"]) div:not(.badge):not(.btn),
+body:not([data-theme="dark"]) li,
+body:not([data-theme="dark"]) label,
+body:not([data-theme="dark"]) h1,
+body:not([data-theme="dark"]) h2,
+body:not([data-theme="dark"]) h3,
+body:not([data-theme="dark"]) h4,
+body:not([data-theme="dark"]) h5,
+body:not([data-theme="dark"]) h6 {
+  color: #111827 !important;
+}
+
+/* Forms */
+input, textarea, select {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--theme-text-tertiary) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--primary) !important;
+}
+
+/* Badges and Buttons keep their original colors for visibility and consistency */
+
+/* Links */
+a {
+  color: var(--primary);
+}
+
+a:hover {
+  color: var(--primary-light);
+}
+
+/* Borders */
+.border,
+hr {
+  border-color: var(--theme-border) !important;
+}
+
+/* Shadows */
+.shadow-sm,
+.shadow,
+.shadow-lg {
+  box-shadow: var(--theme-shadow) !important;
+}
+
+/* Empty States */
+.empty-state {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* Tables */
+.table {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.table td,
+.table th {
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+.table tbody tr {
+  background: var(--theme-bg-card) !important;
+}
+
+.table tbody tr:hover {
+  background: var(--theme-bg-tertiary) !important;
+}
+
+/* Dropdown Menus */
+.dropdown-menu {
+  background: var(--theme-bg-card) !important;
+  border-color: var(--theme-border) !important;
+}
+
+.dropdown-item {
+  color: var(--theme-text-primary) !important;
+}
+
+.dropdown-item:hover {
+  background: var(--theme-bg-tertiary) !important;
+}
+
+/* Modals */
+.modal-header,
+.modal-body,
+.modal-footer {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+/* Alerts */
+.alert {
+  background: var(--theme-bg-tertiary) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+/* List Groups */
+.list-group-item {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: var(--theme-border) !important;
+}
+
+/* Checkout Page Specific */
+.billing-details,
+.order-summary {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.billing-details h3,
+.billing-details label,
+.order-summary h3 {
+  color: var(--theme-text-primary) !important;
+}
+
+/* Product Page Specific */
+.product-description,
+.product-specifications,
+.product-info {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.product-description p,
+.product-specifications p,
+.product-info p,
+.product-description span,
+.product-specifications span,
+.product-info span {
+  color: var(--theme-text-primary) !important;
+}
+
+/* Ensure labels are visible */
+label {
+  color: var(--theme-text-primary) !important;
+}
+
+/* Ensure all text in white/light cards is dark in light mode */
+[data-theme="light"] label,
+[data-theme="light"] .product-description,
+[data-theme="light"] .billing-details {
+  color: #111827 !important;
+}
+
+/* Smooth Transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

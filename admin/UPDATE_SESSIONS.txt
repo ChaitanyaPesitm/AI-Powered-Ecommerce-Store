@@ -1,0 +1,18 @@
+Files to update $_SESSION['user'] to $_SESSION['admin_user']:
+
+✅ login.php - DONE
+✅ analytics.php - DONE  
+✅ api/analytics-data.php - DONE
+✅ logout.php - DONE
+✅ products.php - DONE
+
+Still need:
+- index.php
+- orders.php
+- product-add.php
+- product-delete.php
+- product-edit.php
+- returns.php
+- return-details.php
+- reviews.php
+- _admin-header.php

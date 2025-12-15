@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Test - The Seventh Com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .success {
+            color: #22543d;
+            background: #c6f6d5;
+        }
+
+        .error {
+            color: #742a2a;
+            background: #fed7d7;
+        }
+
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        #installBtn {
+            display: none;
+        }
+
+        .log {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2d3748;
+            color: #f7fafc;
+            border-radius: 10px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .log-item {
+            margin: 5px 0;
+            padding: 5px;
+            border-bottom: 1px solid #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 PWA Diagnostic Tool</h1>
+        <p>Testing PWA installation for The Seventh Com</p>
+
+        <div class="status">
+            <div class="status-item" id="swStatus">
+                <span>Service Worker Support:</span>
+                <span id="swSupport">Checking...</span>
+            </div>
+            <div class="status-item" id="manifestStatus">
+                <span>Manifest File:</span>
+                <span id="manifestCheck">Checking...</span>
+            </div>
+            <div class="status-item" id="installStatus">
+                <span>Install Prompt:</span>
+                <span id="installCheck">Checking...</span>
+            </div>
+        </div>
+
+        <button id="installBtn" onclick="installApp()">
+            📥 Install The Seventh Com App
+        </button>
+
+        <button onclick="checkPWA()">
+            🔄 Re-check PWA Status
+        </button>
+
+        <button onclick="clearLogs()">
+            🗑️ Clear Logs
+        </button>
+
+        <div class="log" id="logContainer"></div>
+    </div>
+
+    <script>
+        let deferredPrompt;
+
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const time = new Date().toLocaleTimeString();
+            const logItem = document.createElement('div');
+            logItem.className = 'log-item';
+            logItem.innerHTML = `[${time}] ${message}`;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLogs() {
+            document.getElementById('logContainer').innerHTML = '';
+        }
+
+        function updateStatus(elementId, text, success) {
+            const element = document.getElementById(elementId);
+            element.textContent = text;
+            element.className = success ? 'success' : 'error';
+        }
+
+        async function checkPWA() {
+            log('🔍 Starting PWA diagnostics...');
+
+            // Check Service Worker support
+            if ('serviceWorker' in navigator) {
+                log('✅ Service Worker API is supported');
+                updateStatus('swSupport', '✅ Supported', true);
+
+                try {
+                    const registration = await navigator.serviceWorker.register('/ecommerce/service-worker.js', {
+                        scope: '/ecommerce/'
+                    });
+                    log('✅ Service Worker registered successfully');
+                    log(`   Scope: ${registration.scope}`);
+                } catch (error) {
+                    log('❌ Service Worker registration failed: ' + error.message);
+                    updateStatus('swSupport', '❌ Registration Failed', false);
+                }
+            } else {
+                log('❌ Service Worker not supported in this browser');
+                updateStatus('swSupport', '❌ Not Supported', false);
+            }
+
+            // Check Manifest
+            try {
+                const response = await fetch('/ecommerce/manifest.json');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    log('✅ Manifest file loaded');
+                    log(`   App Name: ${manifest.name}`);
+                    log(`   Start URL: ${manifest.start_url}`);
+                    updateStatus('manifestCheck', '✅ Found', true);
+                } else {
+                    log('❌ Manifest file not found (404)');
+                    updateStatus('manifestCheck', '❌ Not Found', false);
+                }
+            } catch (error) {
+                log('❌ Failed to load manifest: ' + error.message);
+                updateStatus('manifestCheck', '❌ Error', false);
+            }
+
+            // Check install prompt
+            if (deferredPrompt) {
+                log('✅ Install prompt is available');
+                updateStatus('installCheck', '✅ Available', true);
+                document.getElementById('installBtn').style.display = 'inline-block';
+            } else {
+                log('⚠️ Install prompt not available yet');
+                log('   Reasons: App may be installed, or criteria not met');
+                updateStatus('installCheck', '⚠️ Not Available', false);
+            }
+
+            log('✅ Diagnostic complete');
+        }
+
+        async function installApp() {
+            if (!deferredPrompt) {
+                log('❌ Install prompt not available');
+                alert('Install prompt is not available. The app may already be installed.');
+                return;
+            }
+
+            log('📱 Showing install prompt...');
+            deferredPrompt.prompt();
+
+            const { outcome } = await deferredPrompt.userChoice;
+            log(`📊 User response: ${outcome}`);
+
+            if (outcome === 'accepted') {
+                log('✅ User accepted the install');
+            } else {
+                log('❌ User dismissed the install');
+            }
+
+            deferredPrompt = null;
+            document.getElementById('installBtn').style.display = 'none';
+        }
+
+        // Listen for install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            log('🎯 Install prompt event fired!');
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').style.display = 'inline-block';
+            updateStatus('installCheck', '✅ Ready', true);
+        });
+
+        // Listen for app installed
+        window.addEventListener('appinstalled', () => {
+            log('🎉 App installed successfully!');
+            deferredPrompt = null;
+        });
+
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            log('🚀 Page loaded, starting checks...');
+            setTimeout(checkPWA, 1000);
+        });
+    </script>
+</body>
+</html>

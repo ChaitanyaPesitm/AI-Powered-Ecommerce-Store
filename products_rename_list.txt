@@ -1,0 +1,11 @@
+ID: 11 | Name: Samsung Galaxy Watch 7
+ID: 10 | Name: Samsung Galaxy S25 Ultra
+ID: 9 | Name: ASUS Vivobook
+ID: 8 | Name: HP 350 KeyBoard
+ID: 7 | Name: Apple iPhone 16 Pro Max
+ID: 6 | Name: Bose Headphones
+ID: 5 | Name: Corsair Katar Pro
+ID: 4 | Name: HP Omen Gaming Laptop
+ID: 3 | Name: Dell WM118 Mouse
+ID: 2 | Name: Sony Alpha Camera
+ID: 1 | Name: Marshall Emberton

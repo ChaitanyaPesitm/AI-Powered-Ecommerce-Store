@@ -1,0 +1,389 @@
+/* ============================================
+   LIGHT/DARK MODE THEME TOGGLE
+   ============================================ */
+
+:root {
+  /* Light Mode Colors (Default) */
+  --theme-bg-primary: #ffffff;
+  --theme-bg-secondary: #f9fafb;
+  --theme-bg-tertiary: #f3f4f6;
+  --theme-bg-card: #ffffff;
+  
+  --theme-text-primary: #111827;
+  --theme-text-secondary: #6b7280;
+  --theme-text-tertiary: #9ca3af;
+  
+  --theme-border: #e5e7eb;
+  --theme-border-light: #f3f4f6;
+  
+  --theme-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --theme-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --theme-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Gradient Overlays */
+  --theme-gradient-overlay: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+  --theme-hero-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Feature Pills & Cards */
+  --theme-pill-bg: rgba(255, 255, 255, 0.2);
+  --theme-pill-border: rgba(255, 255, 255, 0.3);
+  --theme-card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  
+  /* Navbar */
+  --theme-navbar-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --theme-navbar-link: rgba(255, 255, 255, 0.9);
+  --theme-navbar-link-hover-bg: rgba(255, 255, 255, 0.1);
+  
+  /* Product Cards */
+  --theme-product-card-bg: #ffffff;
+  --theme-product-card-border: #e5e7eb;
+  
+  /* Feature Boxes */
+  --theme-feature-box-bg: #ffffff;
+  --theme-feature-box-border: transparent;
+  --theme-feature-box-hover-border: var(--primary);
+  
+  /* Transition Duration */
+  --theme-transition: 0.3s ease;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --theme-bg-primary: #0f172a;
+  --theme-bg-secondary: #1e293b;
+  --theme-bg-tertiary: #334155;
+  --theme-bg-card: #1e293b;
+  
+  --theme-text-primary: #f1f5f9;
+  --theme-text-secondary: #cbd5e1;
+  --theme-text-tertiary: #94a3b8;
+  
+  --theme-border: #334155;
+  --theme-border-light: #475569;
+  
+  --theme-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --theme-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --theme-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  
+  --theme-gradient-overlay: linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+  --theme-hero-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  
+  --theme-pill-bg: rgba(255, 255, 255, 0.1);
+  --theme-pill-border: rgba(255, 255, 255, 0.2);
+  --theme-card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  
+  --theme-navbar-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  --theme-navbar-link: rgba(255, 255, 255, 0.8);
+  --theme-navbar-link-hover-bg: rgba(255, 255, 255, 0.15);
+  
+  --theme-product-card-bg: #1e293b;
+  --theme-product-card-border: #334155;
+  
+  --theme-feature-box-bg: #1e293b;
+  --theme-feature-box-border: #334155;
+  --theme-feature-box-hover-border: var(--primary-light);
+}
+
+/* ============================================
+   THEME TOGGLE BUTTON
+   ============================================ */
+
+.theme-toggle-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle-btn {
+  position: relative;
+  width: 60px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all var(--theme-transition);
+  display: inline-flex !important;
+  align-items: center;
+  padding: 2px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  z-index: 1050;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* Toggle Slider */
+.theme-toggle-slider {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  left: 2px;
+}
+
+[data-theme="dark"] .theme-toggle-slider {
+  transform: translateX(28px);
+  background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+}
+
+/* Icons */
+.theme-icon {
+  font-size: 14px;
+  transition: all var(--theme-transition);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon.sun {
+  color: #fff;
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-icon.moon {
+  color: #fff;
+  opacity: 0;
+  transform: rotate(180deg) scale(0);
+}
+
+[data-theme="dark"] .theme-icon.sun {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0);
+}
+
+[data-theme="dark"] .theme-icon.moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* Background Icons (Decorative) */
+.theme-toggle-bg-icons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  pointer-events: none;
+}
+
+.theme-toggle-bg-icons i {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all var(--theme-transition);
+}
+
+/* ============================================
+   SMOOTH TRANSITIONS FOR THEME ELEMENTS
+   ============================================ */
+
+body,
+.navbar,
+.hero-section,
+.product-card,
+.feature-box,
+.card,
+.modal-content,
+.dropdown-menu,
+.form-control,
+.btn {
+  transition: background-color var(--theme-transition),
+              color var(--theme-transition),
+              border-color var(--theme-transition),
+              box-shadow var(--theme-transition);
+}
+
+/* Apply Theme Variables */
+body {
+  background-color: var(--theme-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+html {
+  background-color: var(--theme-bg-secondary);
+}
+
+.product-card,
+.feature-box,
+.card {
+  background-color: var(--theme-product-card-bg);
+  border-color: var(--theme-product-card-border);
+  box-shadow: var(--theme-shadow);
+}
+
+.product-card:hover,
+.feature-box:hover {
+  box-shadow: var(--theme-card-hover-shadow);
+}
+
+.product-title,
+h1, h2, h3, h4, h5, h6 {
+  color: var(--theme-text-primary);
+}
+
+.text-muted,
+.text-secondary {
+  color: var(--theme-text-secondary) !important;
+}
+
+/* Navbar Theme */
+.navbar {
+  background: var(--theme-navbar-bg) !important;
+}
+
+.navbar .nav-link {
+  color: var(--theme-navbar-link) !important;
+}
+
+.navbar .nav-link:hover {
+  background: var(--theme-navbar-link-hover-bg) !important;
+}
+
+/* Hero Section Theme */
+.hero-section {
+  background: var(--theme-hero-gradient) !important;
+}
+
+.feature-pill {
+  background: var(--theme-pill-bg);
+  border-color: var(--theme-pill-border);
+}
+
+/* Feature Box Theme */
+.feature-box {
+  background: var(--theme-feature-box-bg);
+  border-color: var(--theme-feature-box-border);
+}
+
+.feature-box:hover {
+  border-color: var(--theme-feature-box-hover-border);
+}
+
+/* Forms */
+.form-control {
+  background-color: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
+  border-color: var(--theme-border);
+}
+
+.form-control:focus {
+  background-color: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
+  border-color: var(--primary);
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .bg-light {
+  background-color: var(--theme-bg-tertiary) !important;
+}
+
+[data-theme="dark"] .text-dark {
+  color: var(--theme-text-primary) !important;
+}
+
+[data-theme="dark"] .border {
+  border-color: var(--theme-border) !important;
+}
+
+/* Search Bar Dark Mode */
+[data-theme="dark"] .search-bar input {
+  background-color: var(--theme-bg-card);
+  color: var(--theme-text-primary);
+  border: 1px solid var(--theme-border);
+}
+
+[data-theme="dark"] .search-bar input::placeholder {
+  color: var(--theme-text-tertiary);
+}
+
+/* Select and Input Dark Mode */
+[data-theme="dark"] .form-select,
+[data-theme="dark"] select {
+  background-color: var(--theme-bg-card);
+  color: var(--theme-text-primary);
+  border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .form-select option,
+[data-theme="dark"] select option {
+  background-color: var(--theme-bg-card);
+  color: var(--theme-text-primary);
+}
+
+/* Floating Shapes Dark Mode */
+[data-theme="dark"] .floating-shape {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Badge Dark Mode */
+[data-theme="dark"] .badge-custom {
+  background: #ef4444;
+}
+
+/* Empty State Dark Mode */
+[data-theme="dark"] .empty-state i {
+  color: var(--theme-text-tertiary) !important;
+}
+
+/* ============================================
+   LOADING ANIMATION FOR THEME SWITCH
+   ============================================ */
+
+@keyframes themeSwitch {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.theme-switching {
+  animation: themeSwitch 0.3s ease;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    width: 55px;
+    height: 30px;
+  }
+  
+  .theme-toggle-slider {
+    width: 24px;
+    height: 24px;
+  }
+  
+  [data-theme="dark"] .theme-toggle-slider {
+    transform: translateX(25px);
+  }
+}

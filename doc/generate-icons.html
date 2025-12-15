@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Icon Generator - The Seventh Com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+
+        .icon-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .icon-item {
+            text-align: center;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .icon-canvas {
+            width: 100%;
+            max-width: 128px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .icon-size {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+        }
+
+        .download-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .download-btn:hover {
+            background: #5568d3;
+        }
+
+        .download-all {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .download-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .instructions {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instructions h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 PWA Icon Generator</h1>
+        <p class="subtitle">Generate all required icon sizes for The Seventh Com PWA</p>
+
+        <div class="icon-preview" id="iconPreview"></div>
+
+        <button class="download-all" onclick="downloadAllIcons()">
+            📥 Download All Icons (ZIP)
+        </button>
+
+        <div class="instructions">
+            <h3>📋 Installation Instructions</h3>
+            <ol>
+                <li>Download all icons using the button above</li>
+                <li>Extract the ZIP file</li>
+                <li>Create folder: <code>assets/icons/</code> in your project</li>
+                <li>Copy all PNG files to <code>assets/icons/</code></li>
+                <li>The manifest.json is already configured to use these icons</li>
+                <li>Test your PWA at: <code>http://localhost/ecommerce/public/</code></li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const iconPreview = document.getElementById('iconPreview');
+
+        // Generate icons
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Draw gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Draw shopping cart icon
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🛒', size / 2, size / 2);
+
+            // Create preview
+            const item = document.createElement('div');
+            item.className = 'icon-item';
+            item.innerHTML = `
+                <img src="${canvas.toDataURL()}" class="icon-canvas" alt="${size}x${size}">
+                <div class="icon-size">${size}x${size}</div>
+                <button class="download-btn" onclick="downloadIcon(${size})">Download</button>
+            `;
+            iconPreview.appendChild(item);
+
+            // Store canvas for download
+            window[`canvas${size}`] = canvas;
+        });
+
+        function downloadIcon(size) {
+            const canvas = window[`canvas${size}`];
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function downloadAllIcons() {
+            alert('Individual downloads will start. Save each icon to assets/icons/ folder.');
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    downloadIcon(size);
+                }, index * 500);
+            });
+        }
+    </script>
+</body>
+</html>

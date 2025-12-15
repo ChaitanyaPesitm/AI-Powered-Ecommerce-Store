@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Toggle Test - The Seventh Com</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <!-- Theme Toggle CSS -->
+  <link rel="stylesheet" href="assets/css/theme-toggle.css">
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--theme-bg-secondary);
+      color: var(--theme-text-primary);
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .test-card {
+      background: var(--theme-bg-card);
+      border: 1px solid var(--theme-border);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--theme-shadow);
+      transition: all 0.3s ease;
+    }
+
+    .test-card:hover {
+      box-shadow: var(--theme-shadow-lg);
+      transform: translateY(-5px);
+    }
+
+    .test-header {
+      background: var(--theme-hero-gradient);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .theme-toggle-demo {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin: 0.5rem;
+    }
+
+    .status-badge.active {
+      background: #10b981;
+      color: white;
+    }
+
+    .status-badge.inactive {
+      background: var(--theme-border);
+      color: var(--theme-text-secondary);
+    }
+
+    .color-swatch {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      border-radius: 0.5rem;
+      margin: 0.5rem;
+      border: 2px solid var(--theme-border);
+      position: relative;
+    }
+
+    .color-label {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--theme-text-secondary);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      background: var(--theme-bg-primary);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--theme-border);
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--theme-shadow-md);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #667eea;
+    }
+
+    code {
+      background: var(--theme-bg-tertiary);
+      color: var(--theme-text-primary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-test {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-test:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Theme Toggle Button -->
+  <div class="theme-toggle-demo">
+    <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+      <div class="theme-toggle-bg-icons">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+      </div>
+      <div class="theme-toggle-slider">
+        <i class="fas fa-sun theme-icon sun"></i>
+        <i class="fas fa-moon theme-icon moon"></i>
+      </div>
+    </button>
+  </div>
+
+  <div class="test-container">
+    <!-- Header -->
+    <div class="test-header">
+      <h1>🌓 Theme Toggle Test Page</h1>
+      <p class="lead">Testing Light/Dark Mode Implementation for The Seventh Com</p>
+      <div class="mt-3">
+        <span class="status-badge active" id="currentTheme">Loading...</span>
+        <span class="status-badge inactive" id="gsapStatus">GSAP: Checking...</span>
+      </div>
+    </div>
+
+    <!-- Feature Overview -->
+    <div class="test-card">
+      <h2><i class="fas fa-check-circle text-success me-2"></i>Features Implemented</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-palette"></i></div>
+          <h5>CSS Variables</h5>
+          <p>Comprehensive theme variables for all components</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-magic"></i></div>
+          <h5>GSAP Animations</h5>
+          <p>Smooth, premium transitions between themes</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-save"></i></div>
+          <h5>localStorage</h5>
+          <p>Persistent theme preference across sessions</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+          <h5>System Detection</h5>
+          <p>Automatic system preference detection</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Swatches -->
+    <div class="test-card">
+      <h2><i class="fas fa-swatchbook me-2"></i>Theme Colors</h2>
+      <p>Current theme color palette:</p>
+      <div class="d-flex flex-wrap align-items-center" style="margin-bottom: 3rem;">
+        <div class="color-swatch" style="background: var(--theme-bg-primary);">
+          <span class="color-label">Primary BG</span>
+        </div>
+        <div class="color-swatch" style="background: var(--theme-bg-secondary);">
+          <span class="color-label">Secondary BG</span>
+        </div>
+        <div class="color-swatch" style="background: var(--theme-bg-card);">
+          <span class="color-label">Card BG</span>
+        </div>
+        <div class="color-swatch" style="background: var(--theme-text-primary);">
+          <span class="color-label">Text Primary</span>
+        </div>
+        <div class="color-swatch" style="background: var(--theme-text-secondary);">
+          <span class="color-label">Text Secondary</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Tests -->
+    <div class="test-card">
+      <h2><i class="fas fa-vial me-2"></i>Interactive Tests</h2>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <button class="btn-test w-100" onclick="testGetTheme()">
+            <i class="fas fa-info-circle me-2"></i>Get Current Theme
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn-test w-100" onclick="testSetLight()">
+            <i class="fas fa-sun me-2"></i>Force Light Mode
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn-test w-100" onclick="testSetDark()">
+            <i class="fas fa-moon me-2"></i>Force Dark Mode
+          </button>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h5>Console Output:</h5>
+        <div id="consoleOutput" style="background: var(--theme-bg-tertiary); padding: 1rem; border-radius: 0.5rem; font-family: monospace; min-height: 100px; max-height: 200px; overflow-y: auto;">
+          <div style="color: var(--theme-text-secondary);">Ready for testing...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Reference -->
+    <div class="test-card">
+      <h2><i class="fas fa-code me-2"></i>JavaScript API</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Get Current Theme</h5>
+          <code>const theme = getCurrentTheme();</code>
+          <p class="mt-2 text-muted">Returns: 'light' or 'dark'</p>
+        </div>
+        <div class="col-md-6">
+          <h5>Set Theme</h5>
+          <code>setTheme('dark');</code>
+          <p class="mt-2 text-muted">Sets theme to 'light' or 'dark'</p>
+        </div>
+        <div class="col-md-12 mt-3">
+          <h5>Listen to Theme Changes</h5>
+          <code>window.addEventListener('themechange', (e) => console.log(e.detail.theme));</code>
+          <p class="mt-2 text-muted">Event fires when theme changes</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Check -->
+    <div class="test-card">
+      <h2><i class="fas fa-clipboard-check me-2"></i>System Status</h2>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td><strong>GSAP Loaded:</strong></td>
+            <td id="gsapLoaded">Checking...</td>
+          </tr>
+          <tr>
+            <td><strong>Theme Toggle Script:</strong></td>
+            <td id="themeScriptLoaded">Checking...</td>
+          </tr>
+          <tr>
+            <td><strong>localStorage Available:</strong></td>
+            <td id="localStorageAvailable">Checking...</td>
+          </tr>
+          <tr>
+            <td><strong>Current Theme:</strong></td>
+            <td id="currentThemeValue">Checking...</td>
+          </tr>
+          <tr>
+            <td><strong>Saved Preference:</strong></td>
+            <td id="savedPreference">Checking...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Theme Toggle Script -->
+  <script src="assets/js/theme-toggle.js"></script>
+
+  <!-- Test Scripts -->
+  <script>
+    // Console output helper
+    function log(message, type = 'info') {
+      const output = document.getElementById('consoleOutput');
+      const colors = {
+        info: '#3b82f6',
+        success: '#10b981',
+        error: '#ef4444',
+        warning: '#f59e0b'
+      };
+      const timestamp = new Date().toLocaleTimeString();
+      output.innerHTML += `<div style="color: ${colors[type]}; margin: 0.25rem 0;">[${timestamp}] ${message}</div>`;
+      output.scrollTop = output.scrollHeight;
+    }
+
+    // Test functions
+    function testGetTheme() {
+      const theme = getCurrentTheme();
+      log(`Current theme: ${theme}`, 'success');
+      alert(`Current theme: ${theme}`);
+    }
+
+    function testSetLight() {
+      log('Setting theme to light...', 'info');
+      setTheme('light');
+      log('Theme set to light', 'success');
+    }
+
+    function testSetDark() {
+      log('Setting theme to dark...', 'info');
+      setTheme('dark');
+      log('Theme set to dark', 'success');
+    }
+
+    // Update status on load
+    window.addEventListener('load', () => {
+      // Check GSAP
+      const gsapLoaded = typeof gsap !== 'undefined';
+      document.getElementById('gsapLoaded').innerHTML = gsapLoaded 
+        ? '<span class="text-success"><i class="fas fa-check-circle"></i> Yes</span>' 
+        : '<span class="text-danger"><i class="fas fa-times-circle"></i> No</span>';
+      document.getElementById('gsapStatus').textContent = gsapLoaded ? 'GSAP: Loaded ✓' : 'GSAP: Not Loaded ✗';
+      document.getElementById('gsapStatus').className = gsapLoaded ? 'status-badge active' : 'status-badge inactive';
+
+      // Check theme toggle script
+      const themeScriptLoaded = typeof window.themeToggle !== 'undefined';
+      document.getElementById('themeScriptLoaded').innerHTML = themeScriptLoaded 
+        ? '<span class="text-success"><i class="fas fa-check-circle"></i> Yes</span>' 
+        : '<span class="text-danger"><i class="fas fa-times-circle"></i> No</span>';
+
+      // Check localStorage
+      let localStorageAvailable = false;
+      try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+        localStorageAvailable = true;
+      } catch (e) {}
+      document.getElementById('localStorageAvailable').innerHTML = localStorageAvailable 
+        ? '<span class="text-success"><i class="fas fa-check-circle"></i> Yes</span>' 
+        : '<span class="text-danger"><i class="fas fa-times-circle"></i> No</span>';
+
+      // Current theme
+      const currentTheme = getCurrentTheme();
+      document.getElementById('currentThemeValue').innerHTML = `<strong>${currentTheme}</strong>`;
+      document.getElementById('currentTheme').textContent = `Current: ${currentTheme}`;
+
+      // Saved preference
+      const savedPref = localStorage.getItem('theme') || 'None (using system default)';
+      document.getElementById('savedPreference').innerHTML = `<strong>${savedPref}</strong>`;
+
+      log('Test page loaded successfully', 'success');
+      log(`Current theme: ${currentTheme}`, 'info');
+    });
+
+    // Listen to theme changes
+    window.addEventListener('themechange', (e) => {
+      log(`Theme changed to: ${e.detail.theme}`, 'success');
+      document.getElementById('currentTheme').textContent = `Current: ${e.detail.theme}`;
+      document.getElementById('currentThemeValue').innerHTML = `<strong>${e.detail.theme}</strong>`;
+    });
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "The Seventh Com",
+  "short_name": "SeventhCom",
+  "start_url": "/ecommerce/public/index.php",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192.png?text=Icon",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512.png?text=Icon",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
